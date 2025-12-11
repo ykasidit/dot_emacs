@@ -18,5 +18,9 @@ Usage
 - make a link to this repo's .emacs in home
   ```
   ln -s dot_emacs/.emacs
-- restart emacs, install stuff that it complains missing (or remove/edit from .emacs as you prefer)
+- start emacs, install stuff that/if it complains missing (or remove/edit from .emacs as you prefer)
+  (In my case I prefer to start from terminal as some LSP servers somehow have issues when start emacs from gui/menu)
+  ```
+  emacs
+  ```
   
