@@ -1,7 +1,7 @@
-My .emacs file
+My favorite flavor of vanilla emacs
 ==============
 
-My favorite flavor of vanilla emacs.
+My .emacs file with shaman theme, LSP, used regularly fro C, Python, Rust.
 
 Usage
 ------
