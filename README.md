@@ -9,7 +9,7 @@ Usage
 - backup your existing .emacs
   ```
   cd ~
-  cp .emacs .emacs_backup
+  mv .emacs .emacs_backup
   ```
 - clone this repo
   ```
