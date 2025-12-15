@@ -1,7 +1,7 @@
-My .emacs file
+My favorite flavor of vanilla emacs
 ==============
 
-My favorite flavor of vanilla emacs.
+My .emacs file with shaman theme, LSP - used regularly fro Python, C and Rust dev.
 
 Usage
 ------
@@ -15,7 +15,14 @@ Usage
   ```
   git clone git@github.com:ykasidit/dot_emacs.git
   ```
-- make a link to this repo
-  `ln -s dot_emacs/.emacs`
-- restart emacs, install stuff that it complains missing (or remove/edit from .emacs as you prefer)
+- make a link to this repo's .emacs in home
+  ```
+  ln -s dot_emacs/.emacs
+- start emacs, install stuff that/if it complains missing (or remove/edit from .emacs as you prefer)
+
+  (In my case I prefer to start from terminal as some LSP servers somehow have issues when start emacs from gui/menu)
+
+  ```
+  emacs
+  ```
   
