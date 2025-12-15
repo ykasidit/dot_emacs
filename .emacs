@@ -1,3 +1,6 @@
+;; --- Environment overrides ---
+(setenv "LSP_USE_PLISTS" "true")
+
 ;; -*- lexical-binding: t; -*-
 (require 'package)
 
@@ -16,6 +19,8 @@
   :ensure t)
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'c-mode-hook #'lsp)
+(add-to-list 'lsp-disabled-clients 'pylsp)
+
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
@@ -113,8 +118,7 @@
      default))
  '(package-selected-packages
    '(color-theme-modern counsel gnu-elpa-keyring-update list-packages-ext
-			lsp-jedi lsp-mode markdown-mode rustic
-			yasnippet)))
+			lsp-jedi markdown-mode rustic yasnippet)))
 
 
 (custom-set-faces
