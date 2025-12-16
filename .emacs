@@ -105,6 +105,10 @@
                 (c-set-style "linux-tabs-only")))))
 
 (setq-default search-invisible t)
+(setq compilation-skip-threshold 2)
+(setq lsp-inlay-hint-enable t)
+(lsp-inlay-hints-mode 1)
+
 
 (define-key global-map (kbd "C-S-f") 'counsel-rg)
 (custom-set-variables
