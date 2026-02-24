@@ -1,5 +1,7 @@
 ;; --- Environment overrides ---
 (setenv "LSP_USE_PLISTS" "true")
+(setenv "NO_COLOR" "1")
+(setenv "BUILDKIT_PROGRESS" "plain")
 
 ;; -*- lexical-binding: t; -*-
 (require 'package)
@@ -19,6 +21,7 @@
   :ensure t)
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'c-mode-hook #'lsp)
+(add-hook 'go-mode-hook #'lsp)
 (add-to-list 'lsp-disabled-clients 'pylsp)
 
 
@@ -103,7 +106,7 @@
                                        filename))
                 (setq indent-tabs-mode t)
                 (c-set-style "linux-tabs-only")))))
-
+(setq lsp-clients-clangd-executable "/usr/bin/clangd")
 (setq-default search-invisible t)
 (setq compilation-skip-threshold 2)
 (setq lsp-inlay-hint-enable t)
@@ -121,8 +124,11 @@
    '("41100b6e7f88e41cc81940dc54607636525bbf74f8e580ee7ab99486e186d921"
      default))
  '(package-selected-packages
-   '(color-theme-modern counsel gnu-elpa-keyring-update list-packages-ext
-			lsp-jedi markdown-mode rustic yasnippet)))
+   '(bui claude-code color-theme-modern company consult counsel dart-mode
+	 eglot gnu-elpa-keyring-update go-mode list-packages-ext
+	 lsp-jedi request rustic treemacs vterm yaml yasnippet))
+ '(package-vc-selected-packages
+   '((claude-code :url "https://github.com/stevemolitor/claude-code.el"))))
 
 
 (custom-set-faces
@@ -131,3 +137,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package claude-code
+  :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config
+  (claude-code-mode)
+  :bind-keymap ("C-c c" . claude-code-command-map))
