@@ -9,6 +9,7 @@
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu" . "https://elpa.gnu.org/packages/")))
 
+(setq flycheck-navigation-minimum-level 'error)
 
 (package-initialize)
 (unless package-archive-contents
@@ -110,6 +111,7 @@
 (lsp-inlay-hints-mode 1)
 
 
+(setq counsel-rg-base-command "rg --no-heading --line-number --color never --no-messages %s || true")
 (define-key global-map (kbd "C-S-f") 'counsel-rg)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -122,7 +124,7 @@
      default))
  '(package-selected-packages
    '(color-theme-modern counsel gnu-elpa-keyring-update list-packages-ext
-			lsp-jedi markdown-mode rustic yasnippet)))
+			lsp-jedi markdown-mode rustic vterm yasnippet)))
 
 
 (custom-set-faces
