@@ -17,6 +17,7 @@
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu" . "https://elpa.gnu.org/packages/")))
 
+(setq flycheck-navigation-minimum-level 'error)
 
 (package-initialize)
 (unless package-archive-contents
@@ -119,6 +120,7 @@
 (lsp-inlay-hints-mode 1)
 
 
+(setq counsel-rg-base-command "rg --no-heading --line-number --color never --no-messages %s || true")
 (define-key global-map (kbd "C-S-f") 'counsel-rg)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -132,7 +134,7 @@
  '(package-selected-packages
    '(bui claude-code color-theme-modern company consult counsel dart-mode
 	 eglot gnu-elpa-keyring-update go-mode list-packages-ext
-	 lsp-jedi request rustic treemacs vterm yaml yasnippet))
+	 lsp-jedi markdown-mode request rustic treemacs vterm yaml yasnippet))
  '(package-vc-selected-packages
    '((claude-code :url "https://github.com/stevemolitor/claude-code.el"))))
 
