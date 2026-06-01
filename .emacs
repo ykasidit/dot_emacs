@@ -1,7 +1,13 @@
 ;; --- Environment overrides ---
 (setenv "LSP_USE_PLISTS" "true")
-(setenv "NO_COLOR" "1")
 (setenv "BUILDKIT_PROGRESS" "plain")
+
+;; Keep vterm TUIs (e.g. claude) from recentering-jumping on rapid redraws
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (setq-local scroll-conservatively 101)
+            (setq-local scroll-margin 0)
+            (setq-local scroll-step 1)))
 
 ;; -*- lexical-binding: t; -*-
 (require 'package)
