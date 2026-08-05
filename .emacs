@@ -1,13 +1,47 @@
 ;; --- Environment overrides ---
 (setenv "LSP_USE_PLISTS" "true")
 (setenv "BUILDKIT_PROGRESS" "plain")
+;; vterm children (claude's Ctrl+O v, git, etc.) open files in this Emacs
+(setenv "EDITOR" "emacsclient")
+(setenv "VISUAL" "emacsclient")
+(server-start)
+;; GUI Emacs doesn't source the shell profile, so nvm's node bin is invisible
+;; (breaks agent-shell's claude-agent-acp lookup). Put it on PATH/exec-path.
+;; ponytail: picks last dir lexicographically; fine with one node version
+(let ((node-bin (car (last (file-expand-wildcards "~/.nvm/versions/node/*/bin")))))
+  (when node-bin
+    (setenv "PATH" (concat node-bin ":" (getenv "PATH")))
+    (add-to-list 'exec-path node-bin)))
 
 ;; Keep vterm TUIs (e.g. claude) from recentering-jumping on rapid redraws
 (add-hook 'vterm-mode-hook
           (lambda ()
             (setq-local scroll-conservatively 101)
             (setq-local scroll-margin 0)
-            (setq-local scroll-step 1)))
+            (setq-local scroll-step 1)
+            ;; stop sub-line vertical "bounce" while the TUI repaints
+            (setq-local auto-window-vscroll nil)
+            (setq-local fast-but-imprecise-scrolling t)
+            ;; THE main bounce fix: when the cursor lands on the last,
+            ;; partially-clipped screen line (where claude's spinner/status
+            ;; block sits), Emacs scrolls up to fully reveal it, the TUI
+            ;; repaints, and it scrolls back — that oscillation is the bounce.
+            ;; Letting the bottom line stay partially visible kills it.
+            (setq-local make-cursor-line-fully-visible nil)
+            ;; pin scrolling to the minimum, never recenter/aggressive-scroll
+            (setq-local scroll-up-aggressively 0.0)
+            (setq-local scroll-down-aggressively 0.0)
+            ;; if a status line ever wraps at the window edge the buffer
+            ;; height oscillates by a line -> bounce; truncate instead
+            (setq-local truncate-lines t)))
+
+;; vterm output cadence: batch burst redraws so the full-screen TUI doesn't
+;; flicker. Default 0.1 is fine; a touch higher coalesces more without
+;; noticeable lag. (Do NOT set nil/lower — that worsens flicker.)
+(setq vterm-timer-delay 0.15)
+
+;; keep enough scrollback to browse old claude output (default is 1000 lines)
+(setq vterm-max-scrollback 100000)
 
 ;; -*- lexical-binding: t; -*-
 (require 'package)
@@ -131,10 +165,7 @@
  '(custom-safe-themes
    '("41100b6e7f88e41cc81940dc54607636525bbf74f8e580ee7ab99486e186d921"
      default))
- '(package-selected-packages
-   '(bui claude-code color-theme-modern company consult counsel dart-mode
-	 eglot gnu-elpa-keyring-update go-mode list-packages-ext
-	 lsp-jedi markdown-mode request rustic treemacs vterm yaml yasnippet))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
    '((claude-code :url "https://github.com/stevemolitor/claude-code.el"))))
 
