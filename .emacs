@@ -4,7 +4,8 @@
 ;; vterm children (claude's Ctrl+O v, git, etc.) open files in this Emacs
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" "emacsclient")
-(server-start)
+(require (quote server))
+(unless (server-running-p) (server-start))
 ;; GUI Emacs doesn't source the shell profile, so nvm's node bin is invisible
 ;; (breaks agent-shell's claude-agent-acp lookup). Put it on PATH/exec-path.
 ;; ponytail: picks last dir lexicographically; fine with one node version
