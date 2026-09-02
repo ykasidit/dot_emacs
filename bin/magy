@@ -1,0 +1,4 @@
+#!/bin/bash
+# Antigravity (agy) equivalent of ~/bin/claudia: auto-approve tools + pick a Claude Opus model.
+# Override the model per-run with: MAGY_MODEL="Gemini 3.1 Pro (High)" magy ...
+exec agy --dangerously-skip-permissions "$@"
