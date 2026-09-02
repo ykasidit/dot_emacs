@@ -1,7 +1,5 @@
 #!/bin/bash
-# prefersReducedMotion: no spinner shimmer/flash; spinnerTips off: status line
-# stops changing length (wrap -> height oscillation -> vterm bounce);
-# progress bar: OSC 9;4 noise vterm doesn't render anyway.
-exec claude --dangerously-skip-permissions --model fable \
-  --settings '{"prefersReducedMotion":true,"spinnerTipsEnabled":false,"terminalProgressBarEnabled":false}' \
-  "$@"
+# Settings in claudia_settings.json next to this script (resolve symlink):
+# reduced motion + no spinner tips + no progress escapes = less vterm bounce.
+here="$(dirname "$(readlink -f "$0")")"
+exec claude --dangerously-skip-permissions --model fable --settings "$here/claudia_settings.json" "$@"
