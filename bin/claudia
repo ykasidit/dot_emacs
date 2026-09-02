@@ -2,4 +2,4 @@
 # Settings in claudia_settings.json next to this script (resolve symlink):
 # reduced motion + no spinner tips + no progress escapes = less vterm bounce.
 here="$(dirname "$(readlink -f "$0")")"
-exec claude --dangerously-skip-permissions --model fable --settings "$here/claudia_settings.json" "$@"
+exec claude --dangerously-skip-permissions --model claude-fable-5-1 --settings "$here/claudia_settings.json" "$@"
