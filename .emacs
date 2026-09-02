@@ -34,7 +34,18 @@
             (setq-local scroll-down-aggressively 0.0)
             ;; if a status line ever wraps at the window edge the buffer
             ;; height oscillates by a line -> bounce; truncate instead
-            (setq-local truncate-lines t)))
+            (setq-local truncate-lines t)
+            ;; don't force point to bottom on every output chunk (claude-code.el
+            ;; does the same); the TUI positions its own cursor
+            (setq-local vterm-scroll-to-bottom-on-output nil)
+            ;; let vterm own the cursor: emacs blink/cursor redraws add bounce
+            (setq-local cursor-type nil)
+            (setq-local blink-cursor-mode nil)
+            (setq-local cursor-in-non-selected-windows nil)
+            ;; uniform line height: glyph fallback fonts (spinner symbols) must
+            ;; not stretch a line and shift everything below it
+            (setq-local line-spacing nil)))
+(setq vterm-ignore-blink-cursor t)
 
 ;; vterm output cadence: batch burst redraws so the full-screen TUI doesn't
 ;; flicker. Default 0.1 is fine; a touch higher coalesces more without

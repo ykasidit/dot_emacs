@@ -1,2 +1,7 @@
 #!/bin/bash
-exec claude --dangerously-skip-permissions --model fable "$@"
+# prefersReducedMotion: no spinner shimmer/flash; spinnerTips off: status line
+# stops changing length (wrap -> height oscillation -> vterm bounce);
+# progress bar: OSC 9;4 noise vterm doesn't render anyway.
+exec claude --dangerously-skip-permissions --model fable \
+  --settings '{"prefersReducedMotion":true,"spinnerTipsEnabled":false,"terminalProgressBarEnabled":false}' \
+  "$@"
